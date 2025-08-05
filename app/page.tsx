@@ -224,8 +224,37 @@ export default function Home() {
 
       <section className="relative min-h-screen flex items-center">
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-1/4 right-1/4 w-64 h-64 rounded-full bg-primary/10 blur-3xl" />
-          <div className="absolute bottom-1/3 left-1/3 w-96 h-96 rounded-full bg-primary/5 blur-3xl" />
+          {/* Large, very subtle background blob */}
+<motion.div
+  className="absolute -top-20 -left-20 w-96 h-96 rounded-full bg-primary/5 blur-3xl"
+  animate={{ y: [0, -30, 0], x: [0, 30, 0], opacity: [0.1, 0.2, 0.1] }}
+  transition={{ duration: 15, repeat: Infinity, repeatType: "reverse" }}
+/>
+{/* Medium, slightly more defined blob */}
+<motion.div
+  className="absolute top-1/4 right-1/4 w-72 h-72 rounded-full bg-primary/10 blur-3xl"
+  animate={{ y: [0, 40, 0], x: [0, -40, 0], opacity: [0.15, 0.25, 0.15] }}
+  transition={{ duration: 12, repeat: Infinity, repeatType: "reverse", delay: 1 }}
+/>
+{/* Smaller, faster moving element */}
+<motion.div
+  className="absolute bottom-1/4 left-1/4 w-48 h-48 rounded-xl bg-secondary/10 blur-2xl rotate-45"
+  animate={{ rotate: [0, 90, 0], scale: [1, 1.1, 1], opacity: [0.1, 0.2, 0.1] }}
+  transition={{ duration: 10, repeat: Infinity, repeatType: "reverse", delay: 2 }}
+/>
+{/* Another medium blob, different position */}
+<motion.div
+  className="absolute -bottom-10 -right-10 w-80 h-80 rounded-full bg-primary/5 blur-3xl"
+  animate={{ y: [0, -25, 0], x: [0, -25, 0], opacity: [0.05, 0.15, 0.05] }}
+  transition={{ duration: 18, repeat: Infinity, repeatType: "reverse", delay: 0.5 }}
+/>
+{/* A more elongated, subtle shape */}
+<motion.div
+  className="absolute top-1/2 left-1/2 w-60 h-30 rounded-full bg-secondary/5 blur-xl"
+  animate={{ x: [0, 50, 0], y: [0, -20, 0], opacity: [0.08, 0.18, 0.08] }}
+  transition={{ duration: 14, repeat: Infinity, repeatType: "reverse", delay: 3 }}
+/>
+
         </div>
 
         <div className="container mx-auto px-6 md:px-8 grid md:grid-cols-2 gap-12 pt-24 relative z-10">
