@@ -41,7 +41,7 @@ export interface ProjectData {
   }
 }
 
-export interface ProjectCardProps {
+interface ProjectCardProps {
   project: {
     title: string
     category: string
