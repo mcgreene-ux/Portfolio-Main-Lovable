@@ -317,256 +317,247 @@ export default function Home() {
                 className="relative z-10"
               >
                 {/* Main design showcase container */}
-                <div className="relative w-[480px] h-[480px] mx-auto">
-                  {/* Left screen - Mobile mockup */}
+                <div className="relative w-[500px] h-[500px] mx-auto perspective-1000">
+                  {/* 3D Isometric Workspace Scene */}
+                  
+                  {/* Main Desk Surface */}
                   <motion.div
-                    initial={{ opacity: 0, x: -30 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.5, duration: 0.8 }}
-                    className="absolute top-[100px] left-[40px] w-[170px] h-[340px] bg-gradient-to-b from-gray-800 to-gray-900 rounded-[28px] shadow-2xl overflow-hidden border border-gray-600 z-20 transform rotate-[-5deg]"
+                    initial={{ opacity: 0, rotateX: 45, rotateY: -15 }}
+                    animate={{ opacity: 1, rotateX: 45, rotateY: -15 }}
+                    transition={{ delay: 0.2, duration: 1 }}
+                    className="absolute bottom-[100px] left-1/2 transform -translate-x-1/2 w-[400px] h-[200px] bg-gradient-to-br from-slate-100 to-slate-200 rounded-2xl shadow-2xl"
+                    style={{ transformStyle: "preserve-3d" }}
                   >
-                    {/* Mobile screen */}
-                    <div className="w-full h-full bg-gradient-to-b from-white to-gray-50 rounded-[24px] m-1 p-4">
-                      {/* Status indicators */}
-                      <div className="flex justify-between items-center mb-6 pt-2">
-                        <div className="flex space-x-1">
-                          <div className="w-1 h-1 bg-gray-400 rounded-full"></div>
-                          <div className="w-1 h-1 bg-gray-400 rounded-full"></div>
-                          <div className="w-1 h-1 bg-gray-400 rounded-full"></div>
+                    {/* Desk shadow */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-slate-300/50 to-slate-400/50 rounded-2xl transform translate-y-2 translate-x-2 -z-10"></div>
+                  </motion.div>
+
+                  {/* Floating Laptop */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 50, rotateX: 0 }}
+                    animate={{ 
+                      opacity: 1, 
+                      y: [0, -10, 0], 
+                      rotateX: [-5, 5, -5],
+                      rotateY: [0, 2, 0]
+                    }}
+                    transition={{ 
+                      delay: 0.5, 
+                      duration: 2,
+                      y: { repeat: Infinity, duration: 4, ease: "easeInOut" },
+                      rotateX: { repeat: Infinity, duration: 3, ease: "easeInOut" },
+                      rotateY: { repeat: Infinity, duration: 5, ease: "easeInOut" }
+                    }}
+                    className="absolute top-[120px] left-[120px] w-[260px] h-[180px] transform-gpu"
+                    style={{ transformStyle: "preserve-3d" }}
+                  >
+                    {/* Laptop Base */}
+                    <div className="absolute bottom-0 w-full h-[20px] bg-gradient-to-r from-slate-700 to-slate-800 rounded-lg shadow-xl transform rotateX-75"></div>
+                    
+                    {/* Laptop Screen */}
+                    <div className="absolute top-0 w-full h-[160px] bg-gradient-to-b from-slate-800 to-slate-900 rounded-t-lg shadow-2xl border border-slate-600 overflow-hidden">
+                      {/* Screen Content */}
+                      <div className="w-full h-full bg-gradient-to-br from-blue-50 to-indigo-100 p-4 rounded-t-lg m-1">
+                        {/* Browser Chrome */}
+                        <div className="flex items-center space-x-2 mb-3">
+                          <div className="w-2 h-2 rounded-full bg-red-400"></div>
+                          <div className="w-2 h-2 rounded-full bg-yellow-400"></div>
+                          <div className="w-2 h-2 rounded-full bg-green-400"></div>
+                          <div className="flex-1 bg-white/60 rounded h-4 ml-2"></div>
                         </div>
-                        <div className="flex space-x-1">
-                          <div className="w-4 h-2 bg-blue-400 rounded-sm"></div>
-                          <div className="w-1 h-2 bg-gray-300 rounded-sm"></div>
-                        </div>
+                        
+                        {/* Dynamic Code Editor */}
+                        <motion.div 
+                          className="space-y-2"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ delay: 1, duration: 0.5 }}
+                        >
+                          {[...Array(8)].map((_, i) => (
+                            <motion.div
+                              key={i}
+                              initial={{ width: 0 }}
+                              animate={{ width: `${Math.random() * 80 + 20}%` }}
+                              transition={{ delay: 1.2 + i * 0.1, duration: 0.8 }}
+                              className={`h-2 rounded ${
+                                i % 3 === 0 ? 'bg-blue-400' : 
+                                i % 3 === 1 ? 'bg-purple-400' : 'bg-gray-400'
+                              }`}
+                            />
+                          ))}
+                        </motion.div>
                       </div>
+                    </div>
+                  </motion.div>
 
-                      {/* App content - Analytics Dashboard */}
-                      <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 1, duration: 0.5 }}
-                        className="space-y-4"
-                      >
-                        {/* Header with profile */}
-                        <div className="flex items-center space-x-3 pb-3">
-                          <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full shadow-sm"></div>
-                          <div className="space-y-2 flex-1">
-                            <div className="h-2 w-20 bg-gradient-to-r from-gray-800 to-gray-600 rounded-full"></div>
-                            <div className="h-1.5 w-16 bg-gray-400 rounded-full"></div>
-                          </div>
+                  {/* Floating Mobile Phone */}
+                  <motion.div
+                    initial={{ opacity: 0, x: -100, rotateZ: -15 }}
+                    animate={{ 
+                      opacity: 1, 
+                      x: 0,
+                      y: [0, -15, 0],
+                      rotateZ: [-15, -10, -15]
+                    }}
+                    transition={{ 
+                      delay: 0.8, 
+                      duration: 1,
+                      y: { repeat: Infinity, duration: 3.5, ease: "easeInOut" },
+                      rotateZ: { repeat: Infinity, duration: 4, ease: "easeInOut" }
+                    }}
+                    className="absolute top-[80px] left-[20px] w-[120px] h-[240px] bg-gradient-to-b from-slate-800 to-slate-900 rounded-[24px] shadow-2xl border border-slate-600 overflow-hidden z-30"
+                  >
+                    {/* Phone Screen */}
+                    <div className="w-full h-full bg-gradient-to-b from-white to-gray-50 rounded-[20px] m-1 p-3">
+                      {/* Status Bar */}
+                      <div className="flex justify-between items-center mb-4">
+                        <div className="flex space-x-1">
+                          <div className="w-1 h-1 bg-gray-400 rounded-full"></div>
+                          <div className="w-1 h-1 bg-gray-400 rounded-full"></div>
+                          <div className="w-1 h-1 bg-gray-400 rounded-full"></div>
                         </div>
-
-                        {/* Analytics cards */}
-                        {[...Array(3)].map((_, i) => (
+                        <div className="w-6 h-2 bg-green-400 rounded-sm"></div>
+                      </div>
+                      
+                      {/* App Interface */}
+                      <motion.div className="space-y-3">
+                        {[...Array(4)].map((_, i) => (
                           <motion.div
                             key={i}
-                            initial={{ opacity: 0, x: -10 }}
+                            initial={{ opacity: 0, x: -20 }}
                             animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: 1.2 + i * 0.2, duration: 0.4 }}
-                            className="bg-gradient-to-r from-gray-50 to-white p-3 rounded-xl shadow-sm border border-gray-100"
+                            transition={{ delay: 1.5 + i * 0.2, duration: 0.5 }}
+                            className="flex items-center space-x-2 bg-gradient-to-r from-blue-50 to-indigo-50 p-2 rounded-lg"
                           >
-                            <div className="flex items-center space-x-3 mb-3">
-                              <div
-                                className={`w-8 h-8 rounded-lg shadow-sm ${
-                                  i === 0
-                                    ? "bg-gradient-to-br from-blue-400 to-blue-500"
-                                    : i === 1
-                                      ? "bg-gradient-to-br from-blue-300 to-blue-400"
-                                      : "bg-gradient-to-br from-gray-400 to-gray-500"
-                                }`}
-                              ></div>
-                              <div className="flex-1 space-y-1">
-                                <div className="h-2 bg-gradient-to-r from-gray-700 to-gray-500 rounded-full w-3/4"></div>
-                                <div className="h-1.5 bg-gray-300 rounded-full w-1/2"></div>
-                              </div>
-                            </div>
-                            {/* Chart representation */}
-                            <div className="space-y-2">
-                              <div className="flex items-end space-x-1 h-8">
-                                <div className="w-2 bg-blue-300 rounded-t" style={{ height: "60%" }}></div>
-                                <div className="w-2 bg-blue-400 rounded-t" style={{ height: "80%" }}></div>
-                                <div className="w-2 bg-blue-500 rounded-t" style={{ height: "100%" }}></div>
-                                <div className="w-2 bg-blue-400 rounded-t" style={{ height: "70%" }}></div>
-                                <div className="w-2 bg-blue-300 rounded-t" style={{ height: "50%" }}></div>
-                              </div>
+                            <div className={`w-6 h-6 rounded-lg ${
+                              i % 2 === 0 ? 'bg-blue-400' : 'bg-purple-400'
+                            }`}></div>
+                            <div className="flex-1 space-y-1">
+                              <div className="h-1.5 bg-gray-300 rounded w-3/4"></div>
+                              <div className="h-1 bg-gray-200 rounded w-1/2"></div>
                             </div>
                           </motion.div>
                         ))}
-
-                        {/* CTA Button */}
-                        <motion.div
-                          initial={{ opacity: 0, scale: 0.9 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={{ delay: 2, duration: 0.5 }}
-                          className="w-full h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mt-6 shadow-lg"
-                        >
-                          <div className="w-6 h-6 bg-white/90 rounded-full shadow-sm"></div>
-                        </motion.div>
                       </motion.div>
                     </div>
                   </motion.div>
 
-                  {/* Center screen - Desktop mockup */}
+                  {/* Floating Tablet */}
                   <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.3, duration: 0.8 }}
-                    className="absolute top-[40px] left-1/2 transform -translate-x-1/2 w-[300px] h-[190px] bg-gradient-to-b from-gray-800 to-gray-900 rounded-xl shadow-2xl overflow-hidden border border-gray-600 z-10"
+                    initial={{ opacity: 0, x: 100, rotateZ: 10 }}
+                    animate={{ 
+                      opacity: 1, 
+                      x: 0,
+                      y: [0, -8, 0],
+                      rotateZ: [10, 15, 10]
+                    }}
+                    transition={{ 
+                      delay: 1.2, 
+                      duration: 1,
+                      y: { repeat: Infinity, duration: 4.5, ease: "easeInOut" },
+                      rotateZ: { repeat: Infinity, duration: 3.5, ease: "easeInOut" }
+                    }}
+                    className="absolute top-[200px] right-[30px] w-[180px] h-[240px] bg-gradient-to-b from-slate-800 to-slate-900 rounded-2xl shadow-2xl border border-slate-600 overflow-hidden z-20"
                   >
-                    {/* Desktop screen */}
-                    <div className="w-full h-full bg-gradient-to-b from-white to-gray-50 p-4 rounded-lg m-1">
-                      {/* Browser chrome */}
-                      <div className="flex items-center space-x-2 mb-4 pb-3 border-b border-gray-100">
-                        <div className="w-3 h-3 rounded-full bg-gradient-to-br from-red-400 to-red-500 shadow-sm"></div>
-                        <div className="w-3 h-3 rounded-full bg-gradient-to-br from-yellow-400 to-yellow-500 shadow-sm"></div>
-                        <div className="w-3 h-3 rounded-full bg-gradient-to-br from-green-400 to-green-500 shadow-sm"></div>
-                        <div className="flex-1 bg-gradient-to-r from-gray-100 to-gray-50 rounded-md h-6 ml-4 shadow-inner"></div>
-                      </div>
-
-                      {/* Website content - Portfolio/Dashboard */}
-                      <motion.div
+                    {/* Tablet Screen */}
+                    <div className="w-full h-full bg-gradient-to-br from-white to-gray-50 rounded-xl m-1 p-4">
+                      {/* Design Canvas */}
+                      <motion.div 
+                        className="w-full h-full bg-gradient-to-br from-purple-50 to-pink-50 rounded-lg p-3 relative overflow-hidden"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        transition={{ delay: 0.8, duration: 0.5 }}
-                        className="space-y-4"
+                        transition={{ delay: 2, duration: 0.5 }}
                       >
-                        <div className="h-6 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg w-3/4 shadow-sm"></div>
-                        <div className="space-y-2">
-                          <div className="h-2 bg-gradient-to-r from-gray-300 to-gray-200 rounded-full w-full"></div>
-                          <div className="h-2 bg-gradient-to-r from-gray-300 to-gray-200 rounded-full w-5/6"></div>
-                          <div className="h-2 bg-gradient-to-r from-gray-300 to-gray-200 rounded-full w-4/6"></div>
-                        </div>
-                        <div className="grid grid-cols-3 gap-3 mt-4">
-                          <div className="h-14 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl shadow-sm border border-gray-200 p-2">
-                            <div className="w-full h-3 bg-blue-200 rounded mb-1"></div>
-                            <div className="w-2/3 h-2 bg-gray-300 rounded"></div>
-                          </div>
-                          <div className="h-14 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl shadow-sm border border-blue-200 p-2">
-                            <div className="w-full h-3 bg-blue-400 rounded mb-1"></div>
-                            <div className="w-2/3 h-2 bg-blue-300 rounded"></div>
-                          </div>
-                          <div className="h-14 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl shadow-sm border border-gray-200 p-2">
-                            <div className="w-full h-3 bg-gray-300 rounded mb-1"></div>
-                            <div className="w-2/3 h-2 bg-gray-200 rounded"></div>
-                          </div>
-                        </div>
-                        <div className="h-10 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg w-2/3 mt-4 shadow-lg"></div>
+                        {/* Design Elements */}
+                        {[...Array(6)].map((_, i) => (
+                          <motion.div
+                            key={i}
+                            initial={{ scale: 0, rotate: 0 }}
+                            animate={{ 
+                              scale: 1, 
+                              rotate: [0, 360],
+                              x: [0, Math.sin(i) * 20, 0],
+                              y: [0, Math.cos(i) * 15, 0]
+                            }}
+                            transition={{ 
+                              delay: 2.2 + i * 0.1, 
+                              duration: 0.8,
+                              rotate: { repeat: Infinity, duration: 8 + i, ease: "linear" },
+                              x: { repeat: Infinity, duration: 4 + i, ease: "easeInOut" },
+                              y: { repeat: Infinity, duration: 3 + i, ease: "easeInOut" }
+                            }}
+                            className={`absolute w-4 h-4 rounded-full ${
+                              i % 3 === 0 ? 'bg-purple-400' : 
+                              i % 3 === 1 ? 'bg-pink-400' : 'bg-blue-400'
+                            }`}
+                            style={{
+                              left: `${20 + (i % 3) * 30}%`,
+                              top: `${20 + Math.floor(i / 3) * 40}%`
+                            }}
+                          />
+                        ))}
                       </motion.div>
                     </div>
                   </motion.div>
 
-                  {/* Right screen - Design tool interface */}
+                  {/* Floating Design Elements */}
+                  {[...Array(12)].map((_, i) => (
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, scale: 0 }}
+                      animate={{ 
+                        opacity: [0.3, 0.8, 0.3], 
+                        scale: [0.5, 1.2, 0.5],
+                        rotate: [0, 360],
+                        x: [0, Math.sin(i * 0.5) * 50, 0],
+                        y: [0, Math.cos(i * 0.5) * 30, 0]
+                      }}
+                      transition={{ 
+                        delay: 2.5 + i * 0.2, 
+                        duration: 1,
+                        opacity: { repeat: Infinity, duration: 3 + i * 0.5, ease: "easeInOut" },
+                        scale: { repeat: Infinity, duration: 4 + i * 0.3, ease: "easeInOut" },
+                        rotate: { repeat: Infinity, duration: 10 + i, ease: "linear" },
+                        x: { repeat: Infinity, duration: 6 + i * 0.5, ease: "easeInOut" },
+                        y: { repeat: Infinity, duration: 5 + i * 0.3, ease: "easeInOut" }
+                      }}
+                      className={`absolute w-3 h-3 z-40 ${
+                        i % 4 === 0 ? 'bg-gradient-to-br from-blue-400 to-blue-600 rounded-full' :
+                        i % 4 === 1 ? 'bg-gradient-to-br from-purple-400 to-purple-600 rounded-lg rotate-45' :
+                        i % 4 === 2 ? 'bg-gradient-to-br from-pink-400 to-pink-600 rounded-full' :
+                        'bg-gradient-to-br from-indigo-400 to-indigo-600 rounded-lg'
+                      } shadow-lg`}
+                      style={{
+                        left: `${10 + (i % 4) * 25}%`,
+                        top: `${10 + Math.floor(i / 4) * 30}%`
+                      }}
+                    />
+                  ))}
+
+                  {/* Ambient Light Effects */}
                   <motion.div
-                    initial={{ opacity: 0, x: 30 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.7, duration: 0.8 }}
-                    className="absolute top-[120px] right-[40px] w-[180px] h-[240px] bg-gradient-to-b from-gray-800 to-gray-900 rounded-xl shadow-xl overflow-hidden border border-gray-600 z-30 transform rotate-[5deg]"
-                  >
-                    <div className="w-full h-full bg-gradient-to-b from-white to-gray-50 rounded-lg m-1 p-3">
-                      {/* Design tool header */}
-                      <div className="flex items-center space-x-2 mb-4 pb-3 border-b border-gray-100">
-                        <div className="w-2 h-2 rounded-full bg-gradient-to-br from-blue-400 to-blue-500"></div>
-                        <div className="w-2 h-2 rounded-full bg-gradient-to-br from-gray-400 to-gray-500"></div>
-                        <div className="w-2 h-2 rounded-full bg-gradient-to-br from-gray-300 to-gray-400"></div>
-                        <div className="flex-1 bg-gradient-to-r from-gray-100 to-gray-50 rounded-sm h-3 ml-2"></div>
-                      </div>
-
-                      <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 1.7, duration: 0.5 }}
-                        className="space-y-4"
-                      >
-                        {/* Tool palette */}
-                        <div className="flex space-x-2">
-                          <div className="w-7 h-7 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg shadow-sm border border-gray-200"></div>
-                          <div className="w-7 h-7 bg-gradient-to-br from-blue-100 to-blue-200 rounded-lg shadow-sm border border-blue-300"></div>
-                          <div className="w-7 h-7 bg-gradient-to-br from-blue-200 to-blue-300 rounded-lg shadow-sm border border-blue-400"></div>
-                          <div className="w-7 h-7 bg-gradient-to-br from-gray-200 to-gray-300 rounded-lg shadow-sm border border-gray-400"></div>
-                        </div>
-
-                        {/* Design canvas - Wireframe */}
-                        <div className="bg-gradient-to-br from-gray-50 to-white rounded-xl p-4 border border-gray-200 shadow-inner">
-                          <div className="space-y-3">
-                            <div className="h-4 bg-gradient-to-r from-blue-400 to-blue-500 rounded-lg w-2/3 shadow-sm"></div>
-                            <div className="space-y-2">
-                              <div className="h-2 bg-gradient-to-r from-gray-300 to-gray-200 rounded-full w-full"></div>
-                              <div className="h-2 bg-gradient-to-r from-gray-300 to-gray-200 rounded-full w-4/5"></div>
-                            </div>
-                            <div className="grid grid-cols-2 gap-2 mt-3">
-                              <div className="h-10 bg-gradient-to-br from-white to-gray-50 rounded-lg border border-gray-200 shadow-sm p-1">
-                                <div className="w-full h-2 bg-gray-200 rounded mb-1"></div>
-                                <div className="w-2/3 h-1 bg-gray-100 rounded"></div>
-                              </div>
-                              <div className="h-10 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg border border-blue-200 shadow-sm p-1">
-                                <div className="w-full h-2 bg-blue-300 rounded mb-1"></div>
-                                <div className="w-2/3 h-1 bg-blue-200 rounded"></div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Properties panel */}
-                        <div className="space-y-3">
-                          <div className="flex justify-between items-center">
-                            <div className="h-2 w-12 bg-gradient-to-r from-gray-400 to-gray-300 rounded-full"></div>
-                            <div className="w-8 h-4 bg-gradient-to-r from-blue-100 to-blue-50 rounded border border-blue-200"></div>
-                          </div>
-                          <div className="flex justify-between items-center">
-                            <div className="h-2 w-10 bg-gradient-to-r from-gray-400 to-gray-300 rounded-full"></div>
-                            <div className="w-6 h-4 bg-gradient-to-r from-gray-100 to-gray-50 rounded border border-gray-200"></div>
-                          </div>
-                          <div className="flex justify-between items-center">
-                            <div className="h-2 w-14 bg-gradient-to-r from-gray-400 to-gray-300 rounded-full"></div>
-                            <div className="w-10 h-4 bg-gradient-to-r from-blue-100 to-blue-50 rounded border border-blue-200"></div>
-                          </div>
-                        </div>
-                      </motion.div>
-                    </div>
-                  </motion.div>
-
-                  {/* Floating design elements */}
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 1.8, duration: 0.6 }}
-                    className="absolute top-[20px] left-[30px] w-12 h-12 bg-gradient-to-br from-blue-200 to-blue-300 rounded-full flex items-center justify-center border border-blue-400 z-40 shadow-lg"
-                  >
-                    <div className="w-6 h-6 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full shadow-sm"></div>
-                  </motion.div>
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: [0.1, 0.3, 0.1] }}
+                    transition={{ 
+                      delay: 1, 
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                    className="absolute inset-0 bg-gradient-radial from-blue-400/20 via-purple-400/10 to-transparent rounded-full blur-3xl"
+                  />
 
                   <motion.div
-                    initial={{ opacity: 0, scale: 0 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 2, duration: 0.6 }}
-                    className="absolute bottom-[30px] right-[50px] w-10 h-10 bg-gradient-to-br from-gray-300 to-gray-400 rounded-xl rotate-45 border border-gray-500 z-40 shadow-lg"
-                  >
-                    <div className="w-full h-full bg-gradient-to-br from-gray-400 to-gray-500 rounded-xl transform rotate-45 shadow-inner"></div>
-                  </motion.div>
-
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 2.2, duration: 0.6 }}
-                    className="absolute top-[280px] left-[20px] w-8 h-8 bg-gradient-to-br from-blue-300 to-blue-400 rounded-full border border-blue-500 z-40 shadow-lg"
-                  >
-                    <div className="w-5 h-5 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full m-1.5 shadow-sm"></div>
-                  </motion.div>
-
-                  {/* Additional floating elements for polish */}
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 2.4, duration: 0.6 }}
-                    className="absolute top-[60px] right-[20px] w-6 h-6 bg-gradient-to-br from-gray-200 to-gray-300 rounded-lg rotate-12 border border-gray-400 z-40 shadow-md"
-                  ></motion.div>
-
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 2.6, duration: 0.6 }}
-                    className="absolute bottom-[80px] left-[60px] w-4 h-4 bg-gradient-to-br from-blue-200 to-blue-300 rounded-full border border-blue-400 z-40 shadow-md"
-                  ></motion.div>
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: [0.05, 0.2, 0.05] }}
+                    transition={{ 
+                      delay: 2, 
+                      duration: 3,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                    className="absolute inset-0 bg-gradient-radial from-pink-400/15 via-indigo-400/8 to-transparent rounded-full blur-2xl transform rotate-45"
+                  />
                 </div>
               </motion.div>
 
