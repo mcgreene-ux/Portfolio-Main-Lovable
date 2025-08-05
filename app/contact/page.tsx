@@ -9,6 +9,19 @@ import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { submitContactForm, type ContactFormState } from "./actions"
 
+// Client-side logging utility
+const clientLog = {
+  info: (message: string, data?: any) => {
+    console.log(`[CONTACT_CLIENT_INFO] ${new Date().toISOString()}: ${message}`, data || '')
+  },
+  error: (message: string, error?: any) => {
+    console.error(`[CONTACT_CLIENT_ERROR] ${new Date().toISOString()}: ${message}`, error)
+  },
+  warn: (message: string, data?: any) => {
+    console.warn(`[CONTACT_CLIENT_WARN] ${new Date().toISOString()}: ${message}`, data || '')
+  }
+}
+
 const socialLinks = [
   { name: "LinkedIn", href: "https://linkedin.com/in/marie-greene", icon: Linkedin, user: "/marie-greene" },
   { name: "Email", href: "mailto:mariecgreene@gmail.com", icon: Mail, user: "mariecgreene@gmail.com" },
@@ -23,11 +36,55 @@ export default function ContactPage() {
   const [state, formAction, isPending] = useActionState(submitContactForm, initialFormState)
   const formRef = useRef<HTMLFormElement>(null)
 
+  // Log component mount
+  useEffect(() => {
+    clientLog.info("Contact page component mounted")
+  }, [])
+
+  // Log state changes
+  useEffect(() => {
+    if (state.type) {
+      clientLog.info("Form state changed", {
+        type: state.type,
+        hasMessage: !!state.message,
+        hasErrors: !!state.errors,
+        errorFields: state.errors ? Object.keys(state.errors) : []
+      })
+    }
+  }, [state])
+
+  // Log pending state changes
+  useEffect(() => {
+    clientLog.info("Form submission state changed", { isPending })
+  }, [isPending])
+
   useEffect(() => {
     if (state.type === "success") {
+      clientLog.info("Form submission successful, resetting form")
       formRef.current?.reset()
+    } else if (state.type === "error") {
+      clientLog.warn("Form submission failed", {
+        message: state.message,
+        errors: state.errors
+      })
     }
   }, [state.type])
+
+  // Enhanced form submission handler
+  const handleFormSubmit = async (formData: FormData) => {
+    try {
+      clientLog.info("Form submission initiated", {
+        formDataSize: Array.from(formData.entries()).length,
+        hasRequiredFields: !!(formData.get('name') && formData.get('email') && formData.get('message'))
+      })
+      
+      // Call the server action
+      await formAction(formData)
+      
+    } catch (error) {
+      clientLog.error("Client-side form submission error", error)
+    }
+  }
 
   return (
     <div className="pt-24 pb-16">
@@ -68,12 +125,18 @@ export default function ContactPage() {
               className="bg-background p-8 md:p-10 rounded-xl shadow-sm"
             >
               <h2 className="text-3xl font-bold mb-8">Send me a message</h2>
-              <form ref={formRef} action={formAction} className="space-y-6">
+              <form ref={formRef} action={handleFormSubmit} className="space-y-6">
                 <div>
                   <Label htmlFor="name" className="flex items-center mb-2">
                     <User className="h-4 w-4 mr-2 text-primary" /> Name
                   </Label>
-                  <Input id="name" name="name" placeholder="Your Name" required />
+                  <Input 
+                    id="name" 
+                    name="name" 
+                    placeholder="Your Name" 
+                    required 
+                    onBlur={(e) => clientLog.info("Name field interaction", { hasValue: !!e.target.value })}
+                  />
                   {state.errors?.name && (
                     <p className="text-sm text-red-500 mt-1 flex items-center">
                       <AlertCircle className="h-4 w-4 mr-1" /> {state.errors.name[0]}
@@ -85,7 +148,14 @@ export default function ContactPage() {
                   <Label htmlFor="email" className="flex items-center mb-2">
                     <Mail className="h-4 w-4 mr-2 text-primary" /> Email
                   </Label>
-                  <Input id="email" name="email" type="email" placeholder="your@email.com" required />
+                  <Input 
+                    id="email" 
+                    name="email" 
+                    type="email" 
+                    placeholder="your@email.com" 
+                    required 
+                    onBlur={(e) => clientLog.info("Email field interaction", { hasValue: !!e.target.value })}
+                  />
                   {state.errors?.email && (
                     <p className="text-sm text-red-500 mt-1 flex items-center">
                       <AlertCircle className="h-4 w-4 mr-1" /> {state.errors.email[0]}
@@ -97,7 +167,12 @@ export default function ContactPage() {
                   <Label htmlFor="subject" className="flex items-center mb-2">
                     <Type className="h-4 w-4 mr-2 text-primary" /> Subject (Optional)
                   </Label>
-                  <Input id="subject" name="subject" placeholder="Regarding..." />
+                  <Input 
+                    id="subject" 
+                    name="subject" 
+                    placeholder="Regarding..." 
+                    onBlur={(e) => clientLog.info("Subject field interaction", { hasValue: !!e.target.value })}
+                  />
                   {state.errors?.subject && (
                     <p className="text-sm text-red-500 mt-1 flex items-center">
                       <AlertCircle className="h-4 w-4 mr-1" /> {state.errors.subject[0]}
@@ -109,7 +184,14 @@ export default function ContactPage() {
                   <Label htmlFor="message" className="flex items-center mb-2">
                     <MessageSquare className="h-4 w-4 mr-2 text-primary" /> Message
                   </Label>
-                  <Textarea id="message" name="message" placeholder="Your message here..." rows={6} required />
+                  <Textarea 
+                    id="message" 
+                    name="message" 
+                    placeholder="Your message here..." 
+                    rows={6} 
+                    required 
+                    onBlur={(e) => clientLog.info("Message field interaction", { messageLength: e.target.value.length })}
+                  />
                   {state.errors?.message && (
                     <p className="text-sm text-red-500 mt-1 flex items-center">
                       <AlertCircle className="h-4 w-4 mr-1" /> {state.errors.message[0]}
