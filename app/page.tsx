@@ -49,7 +49,7 @@ const projects = [
     description: headspaceRedesign.overview,
     slug: headspaceRedesign.slug,
     color: headspaceRedesign.color,
-    image: headspaceRedesign.headerImage, // Placeholder as it's not in data
+    image: headspaceRedesign.headerImage || "/placeholder.svg",
   },
 ]
 
