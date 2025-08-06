@@ -51,51 +51,93 @@ const projects = [
     color: headspaceRedesign.color,
     image: headspaceRedesign.headerImage, // Placeholder as it's not in data
   },
-                {/* Floating Design Elements Around MacBook */}
-                {[...Array(8)].map((_, i) => (
+]
+
+const services = [
+  {
+    icon: <PenTool className="w-8 h-8" />,
+    title: "Product Design",
+    description: "End-to-end product design from concept to launch, focusing on user needs and business goals."
+  },
+  {
+    icon: <Users className="w-8 h-8" />,
+    title: "User Research",
+    description: "In-depth user research and testing to inform design decisions and validate solutions."
+  },
+  {
+    icon: <Compass className="w-8 h-8" />,
+    title: "Strategy",
+    description: "Design strategy and planning to align creative solutions with business objectives."
+  },
+  {
+    icon: <Layers className="w-8 h-8" />,
+    title: "Design Systems",
+    description: "Scalable design systems and component libraries for consistent user experiences."
+  },
+  {
+    icon: <Lightbulb className="w-8 h-8" />,
+    title: "Innovation",
+    description: "Creative problem-solving and innovative approaches to complex design challenges."
+  },
+  {
+    icon: <Monitor className="w-8 h-8" />,
+    title: "Digital Products",
+    description: "Web and mobile applications designed for optimal user engagement and conversion."
+  }
+]
+
+export default function HomePage() {
+  const targetRef = useRef(null)
+  const { scrollYProgress } = useScroll({
+    target: targetRef,
+    offset: ["start end", "end start"]
+  })
+
+  const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [0, 1, 0])
+  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.8, 1, 0.8])
+
+  const springScrollProgress = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  })
+
+  return (
+    <>
+      <div className="fixed top-0 left-0 right-0 h-1 bg-background z-50">
         <motion.div className="h-full bg-foreground" style={{ scaleX: springScrollProgress, transformOrigin: "0%" }} />
       </div>
 
       <section className="relative min-h-screen flex items-center">
-                      opacity: [0.3, 0.7, 0.3], 
-                      scale: [0.9, 1.1, 0.9],
-                      rotate: [0, 360],
-                      x: [0, Math.sin(i * 1.2) * 40, 0],
-                      y: [0, Math.cos(i * 1.2) * 30, 0]
-  transition={{ duration: 15, repeat: Infinity, repeatType: "reverse" }}
-/>
-                      delay: 2 + i * 0.2, 
-<motion.div
-                      opacity: { repeat: Infinity, duration: 4 + i * 0.5, ease: "easeInOut" },
-                      scale: { repeat: Infinity, duration: 3 + i * 0.3, ease: "easeInOut" },
-                      rotate: { repeat: Infinity, duration: 10 + i * 2, ease: "linear" },
-                      x: { repeat: Infinity, duration: 6 + i * 0.5, ease: "easeInOut" },
-                      y: { repeat: Infinity, duration: 5 + i * 0.4, ease: "easeInOut" }
-<motion.div
-                    className={`absolute w-4 h-4 z-5 ${
-                      i % 4 === 0 ? 'bg-blue-500 rounded-full' :
-                      i % 4 === 1 ? 'bg-purple-500 rounded-sm rotate-45' :
-                      i % 4 === 2 ? 'bg-pink-500 rounded-full' :
-                      'bg-indigo-500 rounded-sm'
-  className="absolute -bottom-10 -right-10 w-80 h-80 rounded-full bg-primary/5 blur-3xl"
-  animate={{ y: [0, -25, 0], x: [0, -25, 0], opacity: [0.05, 0.15, 0.05] }}
-                      left: `${10 + (i % 4) * 30}%`,
-                      top: `${20 + Math.floor(i / 4) * 40}%`
-{/* A more elongated, subtle shape */}
-<motion.div
-  className="absolute top-1/2 left-1/2 w-60 h-30 rounded-full bg-secondary/5 blur-xl"
-  animate={{ x: [0, 50, 0], y: [0, -20, 0], opacity: [0.08, 0.18, 0.08] }}
+        <div className="container mx-auto px-6 md:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="space-y-8">
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="text-4xl md:text-6xl lg:text-7xl font-normal leading-tight"
+            >
+              Senior Product & UX/UI Designer
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
               className="text-xl md:text-2xl font-normal mb-8 max-w-xl"
-                  animate={{ opacity: [0.05, 0.2, 0.05] }}
+            >
               I'm a Senior Product & UX/UI designer with 10+ years' of creative experience, skilled at delivering
-                    delay: 0.5, 
-                    duration: 6,
-            {/* MacBook Design Showcase */}
+              user-centered design solutions that drive business growth.
+            </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
-                  className="absolute inset-0 bg-gradient-radial from-blue-400/10 via-purple-400/5 to-transparent rounded-full blur-3xl"
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="flex flex-col sm:flex-row gap-4"
+            >
+              <Button size="lg" asChild>
+                <Link href="/work">View My Work</Link>
+              </Button>
+              <Button size="lg" variant="outline" asChild>
                 <Link href="/contact">Contact Me</Link>
               </Button>
             </motion.div>
@@ -454,165 +496,61 @@ const projects = [
                 initial={{ opacity: 0, scale: 0 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 1.9, duration: 0.8 }}
-                  {/* MacBook Screen */}
-                  <div className="relative w-full h-[320px] bg-gradient-to-br from-gray-800 to-gray-900 rounded-t-2xl border-4 border-gray-700 shadow-2xl overflow-hidden">
-                    {/* Screen Bezel */}
-                    <div className="absolute inset-2 bg-black rounded-xl overflow-hidden">
-                      {/* macOS Menu Bar */}
-                      <div className="h-7 bg-gray-900 flex items-center px-4 border-b border-gray-700">
-                        <div className="flex space-x-2">
-                          <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                          <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                          <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                        </div>
-                        <div className="flex-1 text-center">
-                          <span className="text-white text-xs font-medium">Figma - Design Portfolio</span>
-                        </div>
-                      </div>
+                className="absolute -bottom-10 -right-10 w-80 h-80 rounded-full bg-primary/5 blur-3xl"
+              />
+            </div>
+          </motion.div>
+        </div>
 
-                      {/* Screen Content Area - This is where you'll add your images */}
-                      <div className="relative h-[calc(100%-28px)] bg-gradient-to-br from-gray-100 to-gray-200">
-                        {/* Layer 1 - Background Design */}
-                        <motion.div
-                          initial={{ opacity: 0, scale: 1.1 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={{ delay: 0.5, duration: 1 }}
-                          className="absolute inset-0 bg-white m-4 rounded-lg shadow-lg overflow-hidden"
-                        >
-                          {/* Placeholder for your background design image */}
-                          <div className="w-full h-full bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center">
-                            <div className="text-center text-gray-400">
-                              <div className="text-sm font-medium mb-2">Background Layer</div>
-                              <div className="text-xs">Add your design image here</div>
-                            </div>
-                          </div>
-                        </motion.div>
-
-                        {/* Layer 2 - Main Design */}
-                        <motion.div
-                          initial={{ opacity: 0, x: -50, rotate: -2 }}
-                          animate={{ 
-                            opacity: 1, 
-                            x: 0,
-                            rotate: [0, 1, 0],
-                            y: [0, -5, 0]
-                          }}
-                          transition={{ 
-                            delay: 0.8, 
-                            duration: 1,
-                            rotate: { repeat: Infinity, duration: 6, ease: "easeInOut" },
-                            y: { repeat: Infinity, duration: 4, ease: "easeInOut" }
-                          }}
-                          className="absolute top-8 left-8 w-[280px] h-[200px] bg-white rounded-xl shadow-xl border border-gray-200 overflow-hidden z-20"
-                        >
-                          {/* Placeholder for your main design image */}
-                          <div className="w-full h-full bg-gradient-to-br from-white to-gray-50 flex items-center justify-center">
-                            <div className="text-center text-gray-400">
-                              <div className="text-sm font-medium mb-2">Main Design</div>
-                              <div className="text-xs">Add your UI design here</div>
-                            </div>
-                          </div>
-                        </motion.div>
-
-                        {/* Layer 3 - Mobile Design */}
-                        <motion.div
-                          initial={{ opacity: 0, x: 50, rotate: 3 }}
-                          animate={{ 
-                            opacity: 1, 
-                            x: 0,
-                            rotate: [0, -2, 0],
-                            y: [0, -8, 0]
-                          }}
-                          transition={{ 
-                            delay: 1.1, 
-                            duration: 1,
-                            rotate: { repeat: Infinity, duration: 5, ease: "easeInOut" },
-                            y: { repeat: Infinity, duration: 3.5, ease: "easeInOut" }
-                          }}
-                          className="absolute top-12 right-12 w-[140px] h-[240px] bg-gray-900 rounded-2xl shadow-2xl overflow-hidden z-30"
-                        >
-                          {/* Mobile Screen */}
-                          <div className="absolute inset-2 bg-white rounded-xl overflow-hidden">
-                            {/* Mobile Status Bar */}
-                            <div className="h-6 bg-gray-50 flex items-center justify-between px-3">
-                              <div className="text-xs font-medium">9:41</div>
-                              <div className="flex space-x-1">
-                                <div className="w-4 h-2 bg-green-500 rounded-sm"></div>
-                              </div>
-                            </div>
-                            {/* Mobile Content Area */}
-                            <div className="h-[calc(100%-24px)] bg-gradient-to-br from-gray-50 to-white flex items-center justify-center">
-                              <div className="text-center text-gray-400">
-                                <div className="text-xs font-medium mb-1">Mobile Design</div>
-                                <div className="text-[10px]">Add mobile UI here</div>
-                              </div>
-                            </div>
-                          </div>
-                        </motion.div>
-
-                        {/* Layer 4 - Floating Design Elements */}
-                        <motion.div
-                          initial={{ opacity: 0, scale: 0 }}
-                          animate={{ 
-                            opacity: 1, 
-                            scale: 1,
-                            rotate: [0, 360],
-                            x: [0, 20, 0],
-                            y: [0, -15, 0]
-                          }}
-                          transition={{ 
-                            delay: 1.4, 
-                            duration: 1,
-                            rotate: { repeat: Infinity, duration: 8, ease: "linear" },
-                            x: { repeat: Infinity, duration: 4, ease: "easeInOut" },
-                            y: { repeat: Infinity, duration: 3, ease: "easeInOut" }
-                          }}
-                          className="absolute bottom-8 left-16 w-[100px] h-[100px] bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden z-25"
-                        >
-                          {/* Placeholder for design component */}
-                          <div className="w-full h-full bg-gradient-to-br from-purple-50 to-pink-50 flex items-center justify-center">
-                            <div className="text-center text-gray-400">
-                              <div className="text-xs font-medium mb-1">Component</div>
-                              <div className="text-[10px]">Design element</div>
-                            </div>
-                          </div>
-                        </motion.div>
-
-                        {/* Layer 5 - Color Palette */}
-                        <motion.div
-                          initial={{ opacity: 0, y: 50 }}
-                          animate={{ 
-                            opacity: 1, 
-                            y: 0,
-                            x: [0, -10, 0],
-                            rotate: [0, -1, 0]
-                          }}
-                          transition={{ 
-                            delay: 1.7, 
-                            duration: 1,
-                            x: { repeat: Infinity, duration: 5, ease: "easeInOut" },
-                            rotate: { repeat: Infinity, duration: 7, ease: "easeInOut" }
-                          }}
-                          className="absolute bottom-12 right-20 w-[120px] h-[60px] bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden z-25"
-                        >
-                          {/* Color swatches */}
-                          <div className="p-3">
-                            <div className="flex space-x-2 mb-2">
-                              <div className="w-4 h-4 bg-blue-500 rounded"></div>
-                              <div className="w-4 h-4 bg-purple-500 rounded"></div>
-                              <div className="w-4 h-4 bg-pink-500 rounded"></div>
-                            </div>
-                            <div className="text-[10px] text-gray-400 font-medium">Color Palette</div>
-                          </div>
-                        </motion.div>
-                      </div>
-                    </div>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.5, duration: 1 }}
           className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center"
+        >
+          <span className="text-sm text-muted-foreground mb-2">Scroll to explore</span>
+          <motion.div
+            animate={{ y: [0, 8, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          >
+            <ChevronDown className="w-5 h-5 text-muted-foreground" />
+          </motion.div>
+        </motion.div>
+      </section>
 
-                  {/* MacBook Base/Keyboard */}
-                  <div className="absolute bottom-0 w-full h-[80px] bg-gradient-to-b from-gray-300 to-gray-400 rounded-b-3xl shadow-lg">
-                    {/* Trackpad */}
-                    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-24 h-16 bg-gray-200 rounded-lg border border-gray-300"></div>
+      <section className="py-24 bg-background">
+        <div className="container mx-auto px-6 md:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-3xl md:text-5xl font-normal mb-4">What I Do</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              I specialize in creating meaningful digital experiences through strategic design thinking and user-centered
+              approaches.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {services.map((service, index) => (
+              <motion.div
+                key={service.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                className="text-center p-6"
+              >
+                <motion.div
+                  initial={{ scale: 0 }}
+                  whileInView={{ scale: 1 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 + 0.2 }}
+                  viewport={{ once: true }}
+                  className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 text-primary mb-6"
+                >
                   {service.icon}
                 </motion.div>
                 <h3 className="text-xl font-medium mb-3">{service.title}</h3>
