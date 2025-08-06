@@ -51,247 +51,51 @@ const projects = [
     color: headspaceRedesign.color,
     image: headspaceRedesign.headerImage, // Placeholder as it's not in data
   },
-  {
-    title: zarkAdminDashboard.title,
-    category: zarkAdminDashboard.subtitle,
-    description: zarkAdminDashboard.overview,
-    slug: zarkAdminDashboard.slug,
-    color: zarkAdminDashboard.color,
-    image: zarkAdminDashboard.headerImage || "/placeholder.svg",
-  },
-  {
-    title: zumoExchangeFeature.title,
-    category: zumoExchangeFeature.subtitle,
-    description: zumoExchangeFeature.overview,
-    slug: zumoExchangeFeature.slug,
-    color: zumoExchangeFeature.color,
-    image: zumoExchangeFeature.headerImage || "/placeholder.svg",
-    inProgress: zumoExchangeFeature.inProgress,
-  },
-  {
-    title: waifind.title,
-    category: waifind.subtitle,
-    description: waifind.overview,
-    slug: waifind.slug,
-    color: waifind.color,
-    image: waifind.headerImage || "/placeholder.svg",
-    inProgress: waifind.inProgress,
-  },
-]
-
-const services = [
-  {
-    icon: <Monitor className="h-8 w-8" />,
-    title: "Product & UX/UI Design",
-    description:
-      "Crafting intuitive and engaging user experiences from concept to launch, including robust design systems and interface design.",
-  },
-   {
-    icon: <Lightbulb className="h-8 w-8" />,
-    title: "Product Strategy",
-    description: "Using business and product objectives to drive data-informed design.",
-  },
-  {
-    icon: <Compass className="h-8 w-8" />,
-    title: "User Research",
-    description: "Conducting research to understand user needs, behaviors, and pain points to inform design decisions.",
-  },
-  {
-    icon: <Layers className="h-8 w-8" />,
-    title: "AI Tools for Design",
-    description: "Leveraging AI tools to enhance design velocity, research synthesis, and documentation processes.",
-  },
- 
-  {
-    icon: <PenTool className="h-8 w-8" />,
-    title: "V-Shaped Designer",
-    description:
-      "With my broad range of complimentary design skills, you get a true all-rounder who excels at performing multiple roles at once.",
-  },
-  {
-    icon: <Users className="h-8 w-8" />,
-    title: "Stakeholder Alignment",
-    description:
-      "Building internal alignment and facilitating collaboration between design, product, and business teams.",
-  },
-]
-
-const stats = [
-  { value: 8, label: "Years Experience" },
-  { value: 120, label: "Projects Completed" },
-  { value: 42, label: "Happy Clients" },
-  { value: 12, label: "Design Awards" },
-]
-
-const testimonials = [
-  {
-    quote:
-      "Working with this designer transformed our product. The attention to detail and user-centered approach resulted in a significant increase in user engagement and satisfaction.",
-    author: "Sarah Johnson",
-    position: "Product Manager at TechCorp",
-    image: "/professional-woman-portrait.png",
-  },
-  {
-    quote:
-      "The design process was collaborative and insightful. We received not just beautiful designs, but strategic solutions that addressed our business challenges.",
-    author: "Michael Chen",
-    position: "CEO at StartupX",
-    image: "/professional-man-portrait.png",
-  },
-  {
-    quote:
-      "Our app redesign exceeded all expectations. The intuitive interface and thoughtful interactions have received overwhelmingly positive feedback from our users.",
-    author: "Emily Rodriguez",
-    position: "Head of Product at AppWorks",
-    image: "/professional-woman-portrait-business.png",
-  },
-]
-
-const processSteps = [
-  {
-    number: "01",
-    title: "Discovery",
-    description: "Understanding your business, users, and objectives through research and collaboration.",
-  },
-  {
-    number: "02",
-    title: "Strategy",
-    description: "Developing a strategic approach to design that aligns with your goals and user needs.",
-  },
-  {
-    number: "03",
-    title: "Design",
-    description: "Creating intuitive, engaging, and visually appealing solutions through iterative design.",
-  },
-  {
-    number: "04",
-    title: "Implementation",
-    description: "Bringing designs to life with clean code and attention to detail.",
-  },
-  {
-    number: "05",
-    title: "Evaluation",
-    description: "Testing and refining the solution based on user feedback and performance metrics.",
-  },
-]
-
-export default function Home() {
-  const targetRef = useRef<HTMLDivElement>(null)
-  const scrollRef = useRef<HTMLDivElement>(null)
-  const [scrollProgress, setScrollProgress] = useState(0)
-  const [activeProcess, setActiveProcess] = useState(0)
-
-  const { scrollYProgress } = useScroll({
-    target: targetRef,
-    offset: ["start end", "end start"],
-  })
-
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [0, 1])
-  const scale = useTransform(scrollYProgress, [0, 0.5], [0.8, 1])
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (scrollRef.current) {
-        const scrollPosition = window.scrollY
-        const windowHeight = window.innerHeight
-        const fullHeight = document.body.scrollHeight - windowHeight
-        setScrollProgress(scrollPosition / (fullHeight - windowHeight))
-      }
-    }
-
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveProcess((prev) => (prev === processSteps.length - 1 ? 0 : prev + 1))
-    }, 3000)
-    return () => clearInterval(interval)
-  }, [])
-
-  const springScrollProgress = useSpring(scrollProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001,
-  })
-
-  return (
-    <>
-      <div ref={scrollRef} className="fixed top-0 left-0 right-0 h-1 z-50">
+                {/* Floating Design Elements Around MacBook */}
+                {[...Array(8)].map((_, i) => (
         <motion.div className="h-full bg-foreground" style={{ scaleX: springScrollProgress, transformOrigin: "0%" }} />
       </div>
 
       <section className="relative min-h-screen flex items-center">
-        <div className="absolute inset-0 overflow-hidden">
-          {/* Large, very subtle background blob */}
-<motion.div
-  className="absolute -top-20 -left-20 w-96 h-96 rounded-full bg-primary/5 blur-3xl"
-  animate={{ y: [0, -30, 0], x: [0, 30, 0], opacity: [0.1, 0.2, 0.1] }}
+                      opacity: [0.3, 0.7, 0.3], 
+                      scale: [0.9, 1.1, 0.9],
+                      rotate: [0, 360],
+                      x: [0, Math.sin(i * 1.2) * 40, 0],
+                      y: [0, Math.cos(i * 1.2) * 30, 0]
   transition={{ duration: 15, repeat: Infinity, repeatType: "reverse" }}
 />
-{/* Medium, slightly more defined blob */}
+                      delay: 2 + i * 0.2, 
 <motion.div
-  className="absolute top-1/4 right-1/4 w-72 h-72 rounded-full bg-primary/10 blur-3xl"
-  animate={{ y: [0, 40, 0], x: [0, -40, 0], opacity: [0.15, 0.25, 0.15] }}
-  transition={{ duration: 12, repeat: Infinity, repeatType: "reverse", delay: 1 }}
-/>
-{/* Smaller, faster moving element */}
+                      opacity: { repeat: Infinity, duration: 4 + i * 0.5, ease: "easeInOut" },
+                      scale: { repeat: Infinity, duration: 3 + i * 0.3, ease: "easeInOut" },
+                      rotate: { repeat: Infinity, duration: 10 + i * 2, ease: "linear" },
+                      x: { repeat: Infinity, duration: 6 + i * 0.5, ease: "easeInOut" },
+                      y: { repeat: Infinity, duration: 5 + i * 0.4, ease: "easeInOut" }
 <motion.div
-  className="absolute bottom-1/4 left-1/4 w-48 h-48 rounded-xl bg-secondary/10 blur-2xl rotate-45"
-  animate={{ rotate: [0, 90, 0], scale: [1, 1.1, 1], opacity: [0.1, 0.2, 0.1] }}
-  transition={{ duration: 10, repeat: Infinity, repeatType: "reverse", delay: 2 }}
-/>
-{/* Another medium blob, different position */}
-<motion.div
+                    className={`absolute w-4 h-4 z-5 ${
+                      i % 4 === 0 ? 'bg-blue-500 rounded-full' :
+                      i % 4 === 1 ? 'bg-purple-500 rounded-sm rotate-45' :
+                      i % 4 === 2 ? 'bg-pink-500 rounded-full' :
+                      'bg-indigo-500 rounded-sm'
   className="absolute -bottom-10 -right-10 w-80 h-80 rounded-full bg-primary/5 blur-3xl"
   animate={{ y: [0, -25, 0], x: [0, -25, 0], opacity: [0.05, 0.15, 0.05] }}
-  transition={{ duration: 18, repeat: Infinity, repeatType: "reverse", delay: 0.5 }}
-/>
+                      left: `${10 + (i % 4) * 30}%`,
+                      top: `${20 + Math.floor(i / 4) * 40}%`
 {/* A more elongated, subtle shape */}
 <motion.div
   className="absolute top-1/2 left-1/2 w-60 h-30 rounded-full bg-secondary/5 blur-xl"
   animate={{ x: [0, 50, 0], y: [0, -20, 0], opacity: [0.08, 0.18, 0.08] }}
-  transition={{ duration: 14, repeat: Infinity, repeatType: "reverse", delay: 3 }}
-/>
-
-        </div>
-
-        <div className="container mx-auto px-6 md:px-8 grid md:grid-cols-2 gap-12 pt-24 relative z-10">
-          <div className="flex flex-col justify-center">
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-6xl md:text-8xl font-bold tracking-tighter mb-6"
-            >
-              Product Designer
-            </motion.h1>
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
               className="text-xl md:text-2xl font-normal mb-8 max-w-xl"
-            >
+                  animate={{ opacity: [0.05, 0.2, 0.05] }}
               I'm a Senior Product & UX/UI designer with 10+ years' of creative experience, skilled at delivering
-              impactful products solo or in small teams.
-            </motion.h2>
-
+                    delay: 0.5, 
+                    duration: 6,
+            {/* MacBook Design Showcase */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-              className="flex flex-wrap gap-4"
-            >
-              <Button asChild size="lg" className="rounded-full bg-foreground text-background hover:bg-foreground/90">
-                <Link href="/work">View Projects</Link>
-              </Button>
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="rounded-full border-foreground text-foreground hover:bg-foreground/10"
-              >
+                  className="absolute inset-0 bg-gradient-radial from-blue-400/10 via-purple-400/5 to-transparent rounded-full blur-3xl"
                 <Link href="/contact">Contact Me</Link>
               </Button>
             </motion.div>
@@ -650,66 +454,165 @@ export default function Home() {
                 initial={{ opacity: 0, scale: 0 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 1.9, duration: 0.8 }}
-                className="absolute bottom-20 right-20 w-16 h-16 rounded-full bg-primary/15 z-0"
-              />
-            </div>
-          </motion.div>
-        </div>
+                  {/* MacBook Screen */}
+                  <div className="relative w-full h-[320px] bg-gradient-to-br from-gray-800 to-gray-900 rounded-t-2xl border-4 border-gray-700 shadow-2xl overflow-hidden">
+                    {/* Screen Bezel */}
+                    <div className="absolute inset-2 bg-black rounded-xl overflow-hidden">
+                      {/* macOS Menu Bar */}
+                      <div className="h-7 bg-gray-900 flex items-center px-4 border-b border-gray-700">
+                        <div className="flex space-x-2">
+                          <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                          <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                          <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                        </div>
+                        <div className="flex-1 text-center">
+                          <span className="text-white text-xs font-medium">Figma - Design Portfolio</span>
+                        </div>
+                      </div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5, duration: 1 }}
+                      {/* Screen Content Area - This is where you'll add your images */}
+                      <div className="relative h-[calc(100%-28px)] bg-gradient-to-br from-gray-100 to-gray-200">
+                        {/* Layer 1 - Background Design */}
+                        <motion.div
+                          initial={{ opacity: 0, scale: 1.1 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{ delay: 0.5, duration: 1 }}
+                          className="absolute inset-0 bg-white m-4 rounded-lg shadow-lg overflow-hidden"
+                        >
+                          {/* Placeholder for your background design image */}
+                          <div className="w-full h-full bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center">
+                            <div className="text-center text-gray-400">
+                              <div className="text-sm font-medium mb-2">Background Layer</div>
+                              <div className="text-xs">Add your design image here</div>
+                            </div>
+                          </div>
+                        </motion.div>
+
+                        {/* Layer 2 - Main Design */}
+                        <motion.div
+                          initial={{ opacity: 0, x: -50, rotate: -2 }}
+                          animate={{ 
+                            opacity: 1, 
+                            x: 0,
+                            rotate: [0, 1, 0],
+                            y: [0, -5, 0]
+                          }}
+                          transition={{ 
+                            delay: 0.8, 
+                            duration: 1,
+                            rotate: { repeat: Infinity, duration: 6, ease: "easeInOut" },
+                            y: { repeat: Infinity, duration: 4, ease: "easeInOut" }
+                          }}
+                          className="absolute top-8 left-8 w-[280px] h-[200px] bg-white rounded-xl shadow-xl border border-gray-200 overflow-hidden z-20"
+                        >
+                          {/* Placeholder for your main design image */}
+                          <div className="w-full h-full bg-gradient-to-br from-white to-gray-50 flex items-center justify-center">
+                            <div className="text-center text-gray-400">
+                              <div className="text-sm font-medium mb-2">Main Design</div>
+                              <div className="text-xs">Add your UI design here</div>
+                            </div>
+                          </div>
+                        </motion.div>
+
+                        {/* Layer 3 - Mobile Design */}
+                        <motion.div
+                          initial={{ opacity: 0, x: 50, rotate: 3 }}
+                          animate={{ 
+                            opacity: 1, 
+                            x: 0,
+                            rotate: [0, -2, 0],
+                            y: [0, -8, 0]
+                          }}
+                          transition={{ 
+                            delay: 1.1, 
+                            duration: 1,
+                            rotate: { repeat: Infinity, duration: 5, ease: "easeInOut" },
+                            y: { repeat: Infinity, duration: 3.5, ease: "easeInOut" }
+                          }}
+                          className="absolute top-12 right-12 w-[140px] h-[240px] bg-gray-900 rounded-2xl shadow-2xl overflow-hidden z-30"
+                        >
+                          {/* Mobile Screen */}
+                          <div className="absolute inset-2 bg-white rounded-xl overflow-hidden">
+                            {/* Mobile Status Bar */}
+                            <div className="h-6 bg-gray-50 flex items-center justify-between px-3">
+                              <div className="text-xs font-medium">9:41</div>
+                              <div className="flex space-x-1">
+                                <div className="w-4 h-2 bg-green-500 rounded-sm"></div>
+                              </div>
+                            </div>
+                            {/* Mobile Content Area */}
+                            <div className="h-[calc(100%-24px)] bg-gradient-to-br from-gray-50 to-white flex items-center justify-center">
+                              <div className="text-center text-gray-400">
+                                <div className="text-xs font-medium mb-1">Mobile Design</div>
+                                <div className="text-[10px]">Add mobile UI here</div>
+                              </div>
+                            </div>
+                          </div>
+                        </motion.div>
+
+                        {/* Layer 4 - Floating Design Elements */}
+                        <motion.div
+                          initial={{ opacity: 0, scale: 0 }}
+                          animate={{ 
+                            opacity: 1, 
+                            scale: 1,
+                            rotate: [0, 360],
+                            x: [0, 20, 0],
+                            y: [0, -15, 0]
+                          }}
+                          transition={{ 
+                            delay: 1.4, 
+                            duration: 1,
+                            rotate: { repeat: Infinity, duration: 8, ease: "linear" },
+                            x: { repeat: Infinity, duration: 4, ease: "easeInOut" },
+                            y: { repeat: Infinity, duration: 3, ease: "easeInOut" }
+                          }}
+                          className="absolute bottom-8 left-16 w-[100px] h-[100px] bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden z-25"
+                        >
+                          {/* Placeholder for design component */}
+                          <div className="w-full h-full bg-gradient-to-br from-purple-50 to-pink-50 flex items-center justify-center">
+                            <div className="text-center text-gray-400">
+                              <div className="text-xs font-medium mb-1">Component</div>
+                              <div className="text-[10px]">Design element</div>
+                            </div>
+                          </div>
+                        </motion.div>
+
+                        {/* Layer 5 - Color Palette */}
+                        <motion.div
+                          initial={{ opacity: 0, y: 50 }}
+                          animate={{ 
+                            opacity: 1, 
+                            y: 0,
+                            x: [0, -10, 0],
+                            rotate: [0, -1, 0]
+                          }}
+                          transition={{ 
+                            delay: 1.7, 
+                            duration: 1,
+                            x: { repeat: Infinity, duration: 5, ease: "easeInOut" },
+                            rotate: { repeat: Infinity, duration: 7, ease: "easeInOut" }
+                          }}
+                          className="absolute bottom-12 right-20 w-[120px] h-[60px] bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden z-25"
+                        >
+                          {/* Color swatches */}
+                          <div className="p-3">
+                            <div className="flex space-x-2 mb-2">
+                              <div className="w-4 h-4 bg-blue-500 rounded"></div>
+                              <div className="w-4 h-4 bg-purple-500 rounded"></div>
+                              <div className="w-4 h-4 bg-pink-500 rounded"></div>
+                            </div>
+                            <div className="text-[10px] text-gray-400 font-medium">Color Palette</div>
+                          </div>
+                        </motion.div>
+                      </div>
+                    </div>
           className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center"
-        >
-          <p className="text-sm text-muted-foreground mb-2">Scroll to explore</p>
-          <motion.div
-            animate={{
-              y: [0, 10, 0],
-            }}
-            transition={{
-              duration: 1.5,
-              repeat: Number.POSITIVE_INFINITY,
-              repeatType: "loop",
-            }}
-          >
-            <ChevronDown className="h-6 w-6 text-foreground" />
-          </motion.div>
-        </motion.div>
-      </section>
 
-      <section className="py-24 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-background to-white pointer-events-none" />
-        <div className="container mx-auto px-6 md:px-8 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true, margin: "-100px" }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-3xl md:text-5xl font-normal mb-4">What I Bring to the Table</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Core design capabilities that drive product success and user satisfaction across teams and organizations.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.map((service, index) => (
-              <motion.div
-                key={service.title}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true, margin: "-100px" }}
-                className="bg-white p-8 rounded-lg shadow-sm group hover:shadow-md transition-all duration-300"
-              >
-                <motion.div
-                  initial={{ scale: 1 }}
-                  whileHover={{ scale: 1.1, rotate: 5 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                  className="mb-6 text-foreground"
-                >
+                  {/* MacBook Base/Keyboard */}
+                  <div className="absolute bottom-0 w-full h-[80px] bg-gradient-to-b from-gray-300 to-gray-400 rounded-b-3xl shadow-lg">
+                    {/* Trackpad */}
+                    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-24 h-16 bg-gray-200 rounded-lg border border-gray-300"></div>
                   {service.icon}
                 </motion.div>
                 <h3 className="text-xl font-medium mb-3">{service.title}</h3>
